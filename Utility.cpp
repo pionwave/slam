@@ -1,3 +1,4 @@
+// Slam Assembler (C) 2025 Lynton "Pionwave" Schneider
 
 #include "Utility.hpp"
 #include <iostream>
@@ -78,11 +79,10 @@ void printBytecode(const std::vector<uint8_t>& bytecode, size_t codeSize) {
     std::cout << "\n--- Bytecode Debug Output ---\n";
     std::cout << "Total bytecode size: " << bytecode.size() << " bytes\n";
 
-    // Disassemble code segment
     size_t ip = 0;
     while (ip < codeSize) {
         size_t instrStart = ip;
-        if (ip >= bytecode.size()) break; // Sanity check
+        if (ip >= bytecode.size()) break;
 
         uint8_t opByte = bytecode[ip++];
         BytecodeOp op = static_cast<BytecodeOp>(opByte);

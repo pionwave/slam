@@ -1,3 +1,4 @@
+// Slam Assembler (C) 2025 Lynton "Pionwave" Schneider
 
 #include <iostream>
 #include <fstream>
@@ -13,35 +14,6 @@
 #include "Compiler.hpp"
 #include "Linker.hpp"
 #include "VM.hpp"
-
-//-------------------------------------------
-// TOKEN & LEXER
-//-------------------------------------------
-
-
-
-//-------------------------------------------
-// INSTRUCTION IR
-//-------------------------------------------
-
-
-
-//-------------------------------------------
-// COMPILER (Bytecode Generation)
-//-------------------------------------------
-
-
-//-------------------------------------------
-// VIRTUAL MACHINE
-//-------------------------------------------
-
-
-
-
-
-//-------------------------------------------
-// MAIN
-//-------------------------------------------
 
 std::string stripExtension(const std::string& path) {
     size_t last_slash = path.find_last_of("/\\");

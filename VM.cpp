@@ -1,8 +1,8 @@
+// Slam Assembler (C) 2025 Lynton "Pionwave" Schneider
 
 #include "VM.hpp"
 #include <iostream>
 #include <string>
-
     
 VM::VM(const std::vector<uint8_t>& memoryImage, std::size_t memSize, std::size_t stackSize, bool debug)
     : memory_(memoryImage), stack_(stackSize, 0), debug_(debug)

@@ -1,3 +1,4 @@
+// Slam Assembler (C) 2025 Lynton "Pionwave" Schneider
 
 #include "Parser.hpp"
 #include <iostream>
@@ -53,9 +54,7 @@ void Parser::parseLine(Lexer& lex) {
         return;
     }
 
-    // Check which section we're currently in
     if (currentSection_ == Section::DATA) {
-        // In data section, use parseDataLine to handle this line
         parseDataLine(lex);
         return;
     }
@@ -67,7 +66,7 @@ void Parser::parseLine(Lexer& lex) {
         lex.nextToken();
 
         if (lex.currentToken().type == TokenType::T_COLON) {
-            lex.nextToken(); // consume colon
+            lex.nextToken();
             Instruction ins{};
             ins.type = InstructionType::INVALID;
             ins.label = labelName;
@@ -75,7 +74,6 @@ void Parser::parseLine(Lexer& lex) {
             ins.col = lcol;
             instructions_.push_back(ins);
 
-            // check if there's an instruction after the label on the same line
             if (!lex.ended() && lex.currentToken().type == TokenType::T_INSTRUCTION) {
                 parseInstructionAfterIdent(lex, lex.currentToken().text, lex.currentToken().line, lex.currentToken().col);
             }
@@ -196,7 +194,7 @@ void Parser::parseInstructionAfterIdent(Lexer& lex, const std::string& mnemonic,
     ins.line = line;
     ins.col = col;
 
-    lex.nextToken(); // consume the instruction
+    lex.nextToken();
 
     int expectedOperands = 0;
     switch (itype)
@@ -258,7 +256,6 @@ void Parser::parseDataLine(Lexer& lex) {
     }
 
     if (lex.ended()) {
-        // Just a label line in data, no data directive
         if (!labelName.empty()) {
             dataLabels_[labelName] = dataOffset_;
         }
@@ -300,8 +297,7 @@ void Parser::parseWordList(Lexer& lex, const std::string& labelName) {
     }
 
     if (!labelName.empty()) {
-        // label points to start of this data
-        dataLabels_[labelName] = dataOffset_ - 4; // label at first word offset
+        dataLabels_[labelName] = dataOffset_ - 4;
     }
 }
 

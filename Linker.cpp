@@ -1,3 +1,4 @@
+// Slam Assembler (C) 2025 Lynton "Pionwave" Schneider
 
 #include "Linker.hpp"
 #include <stdexcept>
@@ -190,7 +191,7 @@ std::vector<uint8_t> Linker::link() {
                 }
                 else
                 {
-                    globalSymbolTable_[sym.name] += codeOffsets[i]; // Shift by 5 bytes
+                    globalSymbolTable_[sym.name] += codeOffsets[i]; // need to use the codeoffset tables as we link multiple code segments and the offset is variable
                 }
                 debugPrint("Symbol '" + sym.name + "' assigned address " + std::to_string(globalSymbolTable_[sym.name]));
             }

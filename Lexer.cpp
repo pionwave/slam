@@ -1,3 +1,4 @@
+// Slam Assembler (C) 2025 Lynton "Pionwave" Schneider
 
 #include "Lexer.hpp"
 
@@ -89,7 +90,6 @@ void Lexer::nextToken() {
         current_.col = startCol;
     }
     else if (c == '.') {
-        // read directive
         advance();
         int startCol = columnNumber_;
         size_t start = pos_;

@@ -1,3 +1,4 @@
+// Slam Assembler (C) 2025 Lynton "Pionwave" Schneider
 
 #pragma once
 
@@ -63,7 +64,6 @@ private:
     std::vector<Instruction> instructions_;
     Section currentSection_ = Section::CODE;
 
-    // For data segment
     std::vector<int32_t> dataSegment_;
     std::unordered_map<std::string, int> dataLabels_;
     int dataOffset_ = 0;

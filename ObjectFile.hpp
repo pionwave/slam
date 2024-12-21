@@ -1,4 +1,4 @@
-
+// Slam Assembler (C) 2025 Lynton "Pionwave" Schneider
 
 #pragma once
 
@@ -21,11 +21,11 @@ struct Fixup {
 };
 
 struct ObjectFile {
-    std::vector<uint8_t> codeSegment;   // Code instructions
-    std::vector<uint8_t> dataSegment;   // Data words
+    std::vector<uint8_t> codeSegment;
+    std::vector<uint8_t> dataSegment;
     std::vector<Symbol> symbolTable;
     std::vector<Fixup> fixups;
-    size_t codeSize;                    // Size of codeSegment before dataSegment
+    size_t codeSize;
 };
 
 void WriteObjectFile(const ObjectFile& obj, const std::string& path);

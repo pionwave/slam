@@ -1,3 +1,4 @@
+// Slam Assembler (C) 2025 Lynton "Pionwave" Schneider
 
 #include "Compiler.hpp"
 #include "Utility.hpp"
