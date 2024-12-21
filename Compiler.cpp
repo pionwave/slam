@@ -73,18 +73,18 @@ void Compiler::emitByte(std::vector<uint8_t>& segment, uint8_t byte) {
     if (debug_) {
         std::cout << "[Compiler Debug] Emitted byte: 0x"
             << std::hex << std::setw(2) << std::setfill('0')
-            << static_cast<int>(byte) << std::dec << "\n";
+            << static_cast<int32_t>(byte) << std::dec << "\n";
     }
 }
 
 void Compiler::emitInt32(std::vector<uint8_t>& segment, int32_t value) {
-    for (int i = 0; i < 4; ++i) {
+    for (int32_t i = 0; i < 4; ++i) {
         uint8_t byte = static_cast<uint8_t>((value >> (i * 8)) & 0xFF);
         segment.push_back(byte);
         if (debug_) {
             std::cout << "[Compiler Debug] Emitted int32 byte: 0x"
                 << std::hex << std::setw(2) << std::setfill('0')
-                << static_cast<int>(byte) << std::dec
+                << static_cast<int32_t>(byte) << std::dec
                 << " (" << byte << ")\n";
         }
     }
