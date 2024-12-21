@@ -1,0 +1,9 @@
+﻿slam
+slam.sln
+slam.cpp.backup
+slam.vcxproj
+slam.vcxproj.filters
+slam.vcxproj.user
+*.obj
+*.pdb
+x64/Release/slam.exe
