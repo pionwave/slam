@@ -13,7 +13,7 @@ class Compiler {
 public:
     Compiler(const std::vector<Instruction>& instructions,
         const std::vector<int32_t>& dataSegment,
-        const std::unordered_map<std::string, int>& dataLabels,
+        const std::unordered_map<std::string, int32_t>& dataLabels,
         bool debug = false)
         : instructions_(instructions),
         dataSegment_(dataSegment),
@@ -33,6 +33,6 @@ private:
 
     const std::vector<Instruction>& instructions_;
     const std::vector<int32_t>& dataSegment_;
-    const std::unordered_map<std::string, int>& dataLabels_;
+    const std::unordered_map<std::string, int32_t>& dataLabels_;
     bool debug_;
 };

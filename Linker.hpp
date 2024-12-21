@@ -21,7 +21,7 @@ public:
 private:
     std::vector<ObjectFile> objectFiles_;
     std::unordered_map<std::string, int32_t> globalSymbolTable_;
-    std::vector<std::pair<int, Fixup>> allFixups_;
+    std::vector<std::pair<int32_t, Fixup>> allFixups_;
     bool debug_;
 
     void buildGlobalSymbolTable();

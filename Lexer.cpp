@@ -19,7 +19,7 @@ std::string tokenTypeName(TokenType t) {
 }
 
 
-Lexer::Lexer(const std::string& input, int lineNumber)
+Lexer::Lexer(const std::string& input, int32_t lineNumber)
     : input_(input), pos_(0), lineNumber_(lineNumber), columnNumber_(1) {
     nextToken();
 }
@@ -31,7 +31,7 @@ const Token& Lexer::currentToken() const {
 void Lexer::nextToken() {
     skipSpaces();
     if (pos_ >= input_.size()) {
-        current_ = { TokenType::T_END_OF_FILE, "", 0, lineNumber_, (int)input_.size() + 1 };
+        current_ = { TokenType::T_END_OF_FILE, "", 0, lineNumber_, (int32_t)input_.size() + 1 };
         return;
     }
 
@@ -56,27 +56,27 @@ void Lexer::nextToken() {
         makeToken(TokenType::T_COLON, ":");
         advance();
     }
-    else if (std::isdigit((unsigned char)c) || (c == '-' && (pos_ + 1 < input_.size()) && std::isdigit((unsigned char)input_[pos_ + 1]))) {
+    else if (std::isdigit((uint8_t)c) || (c == '-' && (pos_ + 1 < input_.size()) && std::isdigit((uint8_t)input_[pos_ + 1]))) {
         int startCol = columnNumber_;
         size_t start = pos_;
         advance();
-        while (pos_ < input_.size() && std::isdigit((unsigned char)input_[pos_])) {
+        while (pos_ < input_.size() && std::isdigit((uint8_t)input_[pos_])) {
             advance();
         }
         std::string numStr = input_.substr(start, pos_ - start);
         makeToken(TokenType::T_INT, numStr, std::stoll(numStr));
         current_.col = startCol;
     }
-    else if (std::isalpha((unsigned char)c) || c == '_') {
+    else if (std::isalpha((uint8_t)c) || c == '_') {
         int startCol = columnNumber_;
         size_t start = pos_;
         advance();
-        while (pos_ < input_.size() && (std::isalnum((unsigned char)input_[pos_]) || input_[pos_] == '_')) {
+        while (pos_ < input_.size() && (std::isalnum((uint8_t)input_[pos_]) || input_[pos_] == '_')) {
             advance();
         }
         std::string ident = input_.substr(start, pos_ - start);
         // Convert to uppercase
-        for (auto& ch : ident) ch = (char)std::toupper((unsigned char)ch);
+        for (auto& ch : ident) ch = (int8_t)std::toupper((uint8_t)ch);
 
         if (isInstruction(ident)) {
             makeToken(TokenType::T_INSTRUCTION, ident);
@@ -91,14 +91,14 @@ void Lexer::nextToken() {
     }
     else if (c == '.') {
         advance();
-        int startCol = columnNumber_;
+        int32_t startCol = columnNumber_;
         size_t start = pos_;
         advance();
-        while (pos_ < input_.size() && std::isalpha((unsigned char)input_[pos_])) {
+        while (pos_ < input_.size() && std::isalpha((uint8_t)input_[pos_])) {
             advance();
         }
         std::string dir = input_.substr(start, pos_ - start);
-        for (auto& ch : dir) ch = (char)std::toupper((unsigned char)ch);
+        for (auto& ch : dir) ch = (int8_t)std::toupper((uint8_t)ch);
 
         if (dir == "DATA" || dir == "CODE" || dir == "WORD") {
             current_ = { TokenType::T_DIRECTIVE, dir, 0, lineNumber_, startCol };
@@ -145,8 +145,8 @@ bool Lexer::isInstruction(const std::string& s) const {
 }
 
 bool Lexer::isRegister(const std::string& s) const {
-    if (s.size() >= 2 && s[0] == 'R' && std::isdigit((unsigned char)s[1])) {
-        int idx = std::stoi(s.substr(1));
+    if (s.size() >= 2 && s[0] == 'R' && std::isdigit((uint8_t)s[1])) {
+        int32_t idx = std::stoi(s.substr(1));
         return (idx >= 0 && idx < 16);
     }
     return false;

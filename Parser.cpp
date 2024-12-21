@@ -8,7 +8,7 @@ std::string tokenTypeName(TokenType t);
 Parser::Parser(const std::vector<std::string>& lines, bool debug) : debug_(debug)
 {
     for (size_t i = 0; i < lines.size(); i++) {
-        int currentLine = (int)i + 1;
+        int32_t currentLine = (int32_t)i + 1;
 
         if (debug_)
         {
@@ -34,7 +34,7 @@ const std::vector<int32_t>& Parser::getDataSegment() const {
     return dataSegment_;
 }
 
-const std::unordered_map<std::string, int>& Parser::getDataLabels() const
+const std::unordered_map<std::string, int32_t>& Parser::getDataLabels() const
 {
     return dataLabels_;
 }
@@ -61,8 +61,8 @@ void Parser::parseLine(Lexer& lex) {
 
     if (first.type == TokenType::T_LABEL) {
         std::string labelName = first.text;
-        int lline = first.line;
-        int lcol = first.col;
+        int32_t lline = first.line;
+        int32_t lcol = first.col;
         lex.nextToken();
 
         if (lex.currentToken().type == TokenType::T_COLON) {
@@ -121,8 +121,8 @@ InstructionType Parser::strToInstr(const std::string& s) {
     return InstructionType::INVALID;
 }
 
-int Parser::regNameToIndex(const std::string& r, int line, int col) {
-    int idx = std::stoi(r.substr(1));
+int Parser::regNameToIndex(const std::string& r, int32_t line, int32_t col) {
+    int32_t idx = std::stoi(r.substr(1));
     return idx;
 }
 
@@ -183,7 +183,7 @@ Operand Parser::parseOperand(Lexer& lex) {
     return op;
 }
 
-void Parser::parseInstructionAfterIdent(Lexer& lex, const std::string& mnemonic, int line, int col) {
+void Parser::parseInstructionAfterIdent(Lexer& lex, const std::string& mnemonic, int32_t line, int32_t col) {
     InstructionType itype = strToInstr(mnemonic);
     if (itype == InstructionType::INVALID) {
         error("Invalid instruction: " + mnemonic, line, col);
@@ -196,7 +196,7 @@ void Parser::parseInstructionAfterIdent(Lexer& lex, const std::string& mnemonic,
 
     lex.nextToken();
 
-    int expectedOperands = 0;
+    int32_t expectedOperands = 0;
     switch (itype)
     {
     case InstructionType::ADD: case InstructionType::SUB:
@@ -221,7 +221,7 @@ void Parser::parseInstructionAfterIdent(Lexer& lex, const std::string& mnemonic,
     default: break;
     }
 
-    for (int i = 0; i < expectedOperands; i++) {
+    for (int32_t i = 0; i < expectedOperands; i++) {
         if (lex.ended() || lex.currentToken().type == TokenType::T_END_OF_FILE) {
             error("Not enough operands for " + mnemonic, line, col);
         }
@@ -301,7 +301,7 @@ void Parser::parseWordList(Lexer& lex, const std::string& labelName) {
     }
 }
 
-void Parser::error(const std::string& msg, int line, int col) const {
+void Parser::error(const std::string& msg, int32_t line, int32_t col) const {
     throw std::runtime_error("Parse error at line " + std::to_string(line) +
         ", col " + std::to_string(col) + ": " + msg);
 }

@@ -18,7 +18,7 @@ private:
     int32_t regs_[16]; // R0-R15
     std::vector<uint8_t> memory_;
     std::vector<uint8_t> stack_;
-    int flags_[3]; // 0=ZF, 1=GF, 2=LF
+    int32_t flags_[3]; // 0=ZF, 1=GF, 2=LF
     bool debug_ = false;
 
     uint8_t fetchByte();

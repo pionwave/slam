@@ -54,7 +54,7 @@ void Linker::collectFixups() {
     int32_t accumulatedCodeSegment = 0;
     for (size_t i = 0; i < objectFiles_.size(); ++i) {
         for (const auto& fix : objectFiles_[i].fixups) {
-            allFixups_.emplace_back(static_cast<int>(i), fix);
+            allFixups_.emplace_back(static_cast<int32_t>(i), fix);
             debugPrint("Collected fixup for symbol '" + fix.symbolName + "' in object file " + std::to_string(i + 1));
         }
     }

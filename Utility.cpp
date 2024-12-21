@@ -35,7 +35,7 @@ std::string bcOpName(BytecodeOp op) {
     }
 }
 
-int operandCountForOp(BytecodeOp op) {
+int32_t operandCountForOp(BytecodeOp op) {
     switch (op) {
     case BC_MOV: return 2;
     case BC_ADD: return 3;
@@ -91,9 +91,9 @@ void printBytecode(const std::vector<uint8_t>& bytecode, size_t codeSize) {
         std::cout << "0x" << std::hex << std::setw(4) << std::setfill('0') << instrStart << std::dec
             << ": " << opName;
 
-        int operandCount = operandCountForOp(op);
+        int32_t operandCount = operandCountForOp(op);
 
-        for (int i = 0; i < operandCount; ++i) {
+        for (int32_t i = 0; i < operandCount; ++i) {
             if (ip >= bytecode.size()) {
                 std::cout << " [Truncated]";
                 break;

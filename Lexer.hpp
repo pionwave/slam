@@ -29,7 +29,7 @@ struct Token {
 
 class Lexer {
 public:
-    Lexer(const std::string& input, int lineNumber);
+    Lexer(const std::string& input, int32_t lineNumber);
 
     const Token& currentToken() const;
     void nextToken();
@@ -46,7 +46,7 @@ private:
 
     std::string input_;
     size_t pos_;
-    int lineNumber_;
-    int columnNumber_;
+    int32_t lineNumber_;
+    int32_t columnNumber_;
     Token current_;
 };

@@ -34,14 +34,14 @@ void VM::run()
             throw std::runtime_error("Instruction pointer out of range");
         }
         uint8_t op = fetchByte();
-        int operandCount = operandCountForOp(static_cast<BytecodeOp>(op));
+        int32_t operandCount = operandCountForOp(static_cast<BytecodeOp>(op));
 
         if (debug_)
             std::cout << "Operand count: " << std::to_string(operandCount) << "\n";
 
         std::vector<uint8_t> types;
         std::vector<int32_t> values;
-        for (int i = 0; i < operandCount; i++) {
+        for (int32_t i = 0; i < operandCount; i++) {
             if (regs_[15] + 4 > memory_.size()) {
                 throw std::runtime_error("Operand fetch out of memory bounds");
             }
@@ -69,7 +69,7 @@ void VM::run()
 
 void VM::printRegisters() {
     std::cout << "Register values after execution:\n";
-    for (int i = 0; i < 16; i++) {
+    for (int32_t i = 0; i < 16; i++) {
         std::cout << "R" << i << " = " << regs_[i] << "\n";
     }
 }
@@ -82,7 +82,7 @@ uint8_t VM::fetchByte() {
 
 int32_t VM::fetchInt32() {
     int32_t v = 0;
-    for (int i = 0; i < 4; i++) {
+    for (int32_t i = 0; i < 4; i++) {
         v |= ((int32_t)fetchByte()) << (i * 8);
     }
     return v;
@@ -97,7 +97,7 @@ void VM::checkMem(int32_t addr) {
 int32_t VM::loadMem(int32_t addr) {
     checkMem(addr);
     int32_t v = 0;
-    for (int i = 0; i < 4; i++) {
+    for (int32_t i = 0; i < 4; i++) {
         v |= ((int32_t)memory_[addr + i]) << (i * 8);
     }
     return v;
@@ -105,7 +105,7 @@ int32_t VM::loadMem(int32_t addr) {
 
 void VM::storeMem(int32_t addr, int32_t val) {
     checkMem(addr);
-    for (int i = 0; i < 4; i++) {
+    for (int32_t i = 0; i < 4; i++) {
         memory_[addr + i] = (uint8_t)((val >> (i * 8)) & 0xFF);
     }
 }
@@ -119,7 +119,7 @@ void VM::checkStack(int32_t addr) {
 int32_t VM::loadStack(int32_t addr) {
     checkStack(addr);
     int32_t v = 0;
-    for (int i = 0; i < 4; i++) {
+    for (int32_t i = 0; i < 4; i++) {
         v |= ((int32_t)stack_[addr + i]) << (i * 8);
     }
     return v;
@@ -127,7 +127,7 @@ int32_t VM::loadStack(int32_t addr) {
 
 void VM::storeStack(int32_t addr, int32_t val) {
     checkStack(addr);
-    for (int i = 0; i < 4; i++) {
+    for (int32_t i = 0; i < 4; i++) {
         stack_[addr + i] = (uint8_t)((val >> (i * 8)) & 0xFF);
     }
 }
@@ -302,7 +302,7 @@ bool VM::opRetImpl() {
     return false;
 }
 
-int VM::operandCountForOp(BytecodeOp op) {
+int32_t VM::operandCountForOp(BytecodeOp op) {
     switch (op)
     {
     case BC_ADD: case BC_SUB: case BC_MUL: case BC_DIV:
@@ -378,6 +378,6 @@ void VM::printOperand(uint8_t t, int32_t v) {
     case 2: std::cout << "mem(" << v << ")=" << mem; break;
     case 3: std::cout << "mem(R" << v << ")"; break;
     case 4: std::cout << "labelAddr(" << v << ")"; break;
-    default: std::cout << "invalid_type(" << (int)t << ")";
+    default: std::cout << "invalid_type(" << (int32_t)t << ")";
     }
 }

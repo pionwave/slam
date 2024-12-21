@@ -17,12 +17,12 @@ enum class InstructionType {
 struct Operand {
     bool isRegister = false;
     bool isMemory = false;
-    int regIndex = -1;
+    int32_t regIndex = -1;
     int64_t immediate = 0;
     bool isLabel = false;
     std::string labelName;
-    int line;
-    int col;
+    int32_t line;
+    int32_t col;
 };
 
 
@@ -30,12 +30,12 @@ struct Instruction {
     InstructionType type;
     std::vector<Operand> operands;
     std::string label;
-    int line;
-    int col;
+    int32_t line;
+    int32_t col;
 };
 
 enum class Section {
-    CODE,
+    CODE = 0,
     DATA
 };
 
@@ -45,27 +45,27 @@ public:
 
     const std::vector<Instruction>& getInstructions() const;
     const std::vector<int32_t>& getDataSegment() const;
-    const std::unordered_map<std::string, int>& getDataLabels() const;
+    const std::unordered_map<std::string, int32_t>& getDataLabels() const;
 
 private:
     void parseLine(Lexer& lex);
     void handleDirective(const Token& t);
 
     InstructionType strToInstr(const std::string& s);
-    int regNameToIndex(const std::string& r, int line, int col);
+    int regNameToIndex(const std::string& r, int32_t line, int32_t col);
 
     Operand parseOperand(Lexer& lex);
-    void parseInstructionAfterIdent(Lexer& lex, const std::string& mnemonic, int line, int col);
+    void parseInstructionAfterIdent(Lexer& lex, const std::string& mnemonic, int32_t line, int32_t col);
     void parseDataLine(Lexer& lex);
     void parseWordList(Lexer& lex, const std::string& labelName);
 
-    void error(const std::string& msg, int line, int col) const;
+    void error(const std::string& msg, int32_t line, int32_t col) const;
 
     std::vector<Instruction> instructions_;
     Section currentSection_ = Section::CODE;
 
     std::vector<int32_t> dataSegment_;
-    std::unordered_map<std::string, int> dataLabels_;
-    int dataOffset_ = 0;
+    std::unordered_map<std::string, int32_t> dataLabels_;
+    int32_t dataOffset_ = 0;
     bool debug_ = false;
 };

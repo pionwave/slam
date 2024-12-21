@@ -103,7 +103,7 @@ ObjectFile compileFile(const std::string& str, bool debug = false)
     return compiler.compile();
 }
 
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, int8_t *argv[])
 {
     try {
         auto obj = compileFile("memtest.asm");
